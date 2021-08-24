@@ -11,7 +11,24 @@
 // 러스트는 그 함수가 사용된 적이 없다며 경고해줄 것입니다.
 
 extern crate communicator;
-fn main(){
-    communicator::client::connect();
+
+
+pub mod a {
+    pub mod series {
+        pub mod of {
+            pub fn nested_modules() {}
+        }
+    }
 }
 
+//use a::series::of; //이렇게 모듈 경로가 길어지는 걸 막아줄 수 있다
+//함수 자체도 가능
+
+use a::series::of::nested_modules;
+
+fn main() {
+    communicator::client::connect();
+    // of::nested_modules();//of로 치환가능
+    //함수 자체도 가능
+    nested_modules();
+}
