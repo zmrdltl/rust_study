@@ -15,9 +15,9 @@
 // }
 
 //이 경우를 해보자
-mod client; //이 모듈은 다른 위치에서 찾아야한다.
+pub mod client; //이 모듈은 다른 위치에서 찾아야한다.
 
-mod network;
+pub mod network;
 
 #[cfg(test)]
 mod tests {
@@ -25,4 +25,25 @@ mod tests {
     fn it_works() {
         assert_eq!(2 + 2, 4);
     }
+}
+
+
+//다음코드는 어디에서 에러가 날까??
+mod outermost {
+    pub fn middle_function() {}
+
+    pub fn middle_secret_function() {}
+
+    pub mod inside {
+        pub fn inner_function() {}
+
+        pub fn secret_function() {}
+    }
+}
+
+fn try_me() {
+    outermost::middle_function();
+    outermost::middle_secret_function();
+    outermost::inside::inner_function();
+    outermost::inside::secret_function();
 }
